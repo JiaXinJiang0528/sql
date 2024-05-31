@@ -15,7 +15,11 @@ _Hint, search type 1 vs type 2 slowly changing dimensions._
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
+Type 1 architecture will overwrite the old information with new data, it uses a single table to store most current data. 
+
+Type 2 table is designed to retain history of previous addresses by inserting a new record for each change, it is a history table with all historical versions of the data. 
+
+If type 2 table is used, more hisotorical information is stored, there are privacy implications such as if information storage is in compliance with local jurisdiction's legislations, the need to ensure only data necessary for business process is collected and retained, and the need to have robust security measures to protect data from breaches. 
 ```
 
 ## Question 4
@@ -23,7 +27,8 @@ Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
 ```
-Your answer...
+The AdventureWorks has color coded schemas as it is a lot more complex than my ERD, whih does not need color coding as it's relatively simple. 
+The AdventureWorks identifies the primary keys and foreign keys in their schema, my ERD would benefit from implementation of PK and FK which will help to ensure data integrity and creating meaningful data relationships. 
 ```
 
 # Criteria
