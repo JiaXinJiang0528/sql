@@ -8,6 +8,27 @@ Remember, CROSS JOIN will explode your table rows, so CROSS JOIN should likely b
 Think a bit about the row counts: how many distinct vendors, product names are there (x)?
 How many customers are there (y). 
 Before your final group by you should have the product of those two queries (x*y).  */
+/*
+SELECT vi. vendor_id
+,c. customer_id
+, p.product_id 
+, 5 * vi. original_price AS cost 
+FROM vendor_inventory vi
+CROSS JOIN  customer c
+*/
+
+SELECT 
+    vi.vendor_id, 
+	  p.product_id, 
+    c.customer_id, 
+  
+    5 * vi.original_price AS cost
+FROM 
+    vendor_inventory vi
+
+CROSS JOIN 
+    customer c,
+vendor_inventory p;
 
 
 
@@ -18,18 +39,36 @@ It should use all of the columns from the product table, as well as a new column
 Name the timestamp column `snapshot_timestamp`. */
 
 
+/*
+DROP TABLE IF EXISTS temp.product_units;
+CREATE TEMP TABLE product_units AS 
+SELECT * FROM product
+WHERE product_qty_type = 'unit' ;
+
+ALTER TABLE product_units
+ADD snapshot_timestamp TIMESTAMP;
+
+UPDATE product_units
+SET snapshot_timestamp = CURRENT_TIMESTAMP
+WHERE product_qty_type = 'unit';
+*/
 
 /*2. Using `INSERT`, add a new row to the product_units table (with an updated timestamp). 
 This can be any product you desire (e.g. add another record for Apple Pie). */
 
-
+/*
+INSERT INTO product_units
+VALUES (93, 'Honey', '1 Jar', 1, 'unit', CURRENT_TIMESTAMP)
+*/
 
 -- DELETE
 /* 1. Delete the older record for the whatever product you added. 
 
 HINT: If you don't specify a WHERE clause, you are going to have a bad time.*/
-
-
+/*
+DELETE FROM product_units
+WHERE product_id = 93
+*/
 
 -- UPDATE
 /* 1.We want to add the current_quantity to the product_units table. 
@@ -37,6 +76,7 @@ First, add a new column, current_quantity to the table using the following synta
 
 ALTER TABLE product_units
 ADD current_quantity INT;
+
 
 Then, using UPDATE, change the current_quantity equal to the last quantity value from the vendor_inventory details.
 
